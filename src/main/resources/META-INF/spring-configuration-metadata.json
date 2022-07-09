@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "robot-challenge.table.width",
+    "type": "java.lang.Integer",
+    "description": "Width of the table in the robot challenge game"
+  },
+  {
+    "name": "robot-challenge.table.length",
+    "type": "java.lang.Integer",
+    "description": "Length of the table in the robot challenge game"
+  }
+]}
