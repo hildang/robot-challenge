@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,19 +31,7 @@ public class Table {
 		if (robot == null) {
 			return;
 		}
-		robot.setId(robotList.size() + 1);
 		this.robotList.add(robot);
 	}
 	
-	public void setActiveRobot(int id) {
-		if (id > robotList.size()) {
-			throw new RobotChallengeException("Invalid Robot Id");
-		}
-		this.activeRobot = robotList.get(id - 1);
-		this.activeRobot.setActive(true);
-	}
-	
-	public void print() {
-		
-	}
 }

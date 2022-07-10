@@ -5,12 +5,18 @@ import java.util.Scanner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.ioofholidings.robotchallenge.command.Command;
+import com.ioofholidings.robotchallenge.command.PlaceCommand;
+import com.ioofholidings.robotchallenge.command.ReportCommand;
+import com.ioofholidings.robotchallenge.command.factory.CommandFactory;
+import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
 import com.ioofholidings.robotchallenge.model.Table;
 
 @Component
 public class RobotChallengeGame implements CommandLineRunner {
 	
 	private Table table; 
+	private boolean isFirstCommand = true;
 	
 	public RobotChallengeGame(Table table) {
 		this.table = table;
@@ -22,10 +28,22 @@ public class RobotChallengeGame implements CommandLineRunner {
         
         try (Scanner scanner = new Scanner(System.in)) {
 	        while (scanner.hasNext()) {
-	            String line = scanner.nextLine();
-	            if (line.equals("REPORT")) {
-	            	break;
-	            }
+	        	try {
+		            String line = scanner.nextLine();
+		            Command command = CommandFactory.createCommand(line);
+		            if (isFirstCommand && !(command instanceof PlaceCommand)) {
+						throw new RobotChallengeException("The first command must be a PLACE command");				
+		            }
+		            
+		            command.execute(this.table);
+		            if (command instanceof ReportCommand) {
+		            	break;
+		            }
+	            
+		            isFirstCommand = false;
+	        	} catch (Exception e) {
+	        		System.out.println(e.getMessage());
+	        	}
 	        }
         }
      }
