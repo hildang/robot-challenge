@@ -1,5 +1,6 @@
 package com.ioofholidings.robotchallenge.command;
 
+import com.ioofholidings.robotchallenge.exception.RobotChallengeError;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
 import com.ioofholidings.robotchallenge.model.Table;
 import com.ioofholidings.robotchallenge.service.TableService;
@@ -9,7 +10,7 @@ public class RobotCommand implements Command {
 	private int number;
 	public RobotCommand(String[] args) {
 		if (args.length < 2) {
-			throw new RobotChallengeException("Usage: ROBOT <robot id>");
+			throw new RobotChallengeException(RobotChallengeError.ROBOT_COMMAND_USAGE_ERROR);				
 		}	
 
 		try {

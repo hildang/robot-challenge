@@ -7,6 +7,7 @@ import com.ioofholidings.robotchallenge.command.PlaceCommand;
 import com.ioofholidings.robotchallenge.command.ReportCommand;
 import com.ioofholidings.robotchallenge.command.RightCommand;
 import com.ioofholidings.robotchallenge.command.RobotCommand;
+import com.ioofholidings.robotchallenge.exception.RobotChallengeError;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
 
 public class CommandFactory {
@@ -14,7 +15,7 @@ public class CommandFactory {
 	public static Command createCommand(String commandLine) {
 		String[] args = commandLine.split(" ");
 		if (args.length == 0) {
-			throw new RobotChallengeException("No command provided");
+			throw new RobotChallengeException(RobotChallengeError.NO_COMMAND_PROVIDED_ERROR);				
 		}
 		switch (args[0]) {
 			case "PLACE":
@@ -30,7 +31,7 @@ public class CommandFactory {
 			case "REPORT":
 				return new ReportCommand();
 			default: 
-				throw new RobotChallengeException("No matched command found");				
+				throw new RobotChallengeException(RobotChallengeError.COMMAND_NOT_FOUDN_ERROR);				
 		}
 	}
 	

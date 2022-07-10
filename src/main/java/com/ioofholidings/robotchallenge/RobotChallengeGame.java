@@ -9,6 +9,7 @@ import com.ioofholidings.robotchallenge.command.Command;
 import com.ioofholidings.robotchallenge.command.PlaceCommand;
 import com.ioofholidings.robotchallenge.command.ReportCommand;
 import com.ioofholidings.robotchallenge.command.factory.CommandFactory;
+import com.ioofholidings.robotchallenge.exception.RobotChallengeError;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
 import com.ioofholidings.robotchallenge.model.Table;
 
@@ -32,7 +33,7 @@ public class RobotChallengeGame implements CommandLineRunner {
 		            String line = scanner.nextLine();
 		            Command command = CommandFactory.createCommand(line);
 		            if (isFirstCommand && !(command instanceof PlaceCommand)) {
-						throw new RobotChallengeException("The first command must be a PLACE command");				
+						throw new RobotChallengeException(RobotChallengeError.FIRST_COMMAND_ERROR);				
 		            }
 		            
 		            command.execute(this.table);

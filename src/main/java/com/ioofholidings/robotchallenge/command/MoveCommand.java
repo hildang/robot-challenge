@@ -1,5 +1,6 @@
 package com.ioofholidings.robotchallenge.command;
 
+import com.ioofholidings.robotchallenge.exception.RobotChallengeError;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
 import com.ioofholidings.robotchallenge.model.Coordinate;
 import com.ioofholidings.robotchallenge.model.Robot;
@@ -33,7 +34,7 @@ public class MoveCommand implements Command {
 					newCoordinate.setX(newCoordinate.getX() - 1);
 					break;
 				default:
-					throw new RobotChallengeException("Error with robot facing");
+					throw new RobotChallengeException(RobotChallengeError.ACTIVE_ROBOT_FACING_ERROR);				
 			}
 			
 			TableService.getInstance().updateRobot(table, activeRobot, newCoordinate);

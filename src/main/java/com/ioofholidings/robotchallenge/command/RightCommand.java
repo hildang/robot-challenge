@@ -1,5 +1,6 @@
 package com.ioofholidings.robotchallenge.command;
 
+import com.ioofholidings.robotchallenge.exception.RobotChallengeError;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
 import com.ioofholidings.robotchallenge.model.Facing;
 import com.ioofholidings.robotchallenge.model.Robot;
@@ -30,7 +31,7 @@ public class RightCommand implements Command {
 				newFacing = Facing.NORTH;
 				break;
 			default:
-				throw new RobotChallengeException("Error with robot facing");
+				throw new RobotChallengeException(RobotChallengeError.ACTIVE_ROBOT_FACING_ERROR);				
 		}
 		
 		activeRobot.setFacing(newFacing);
