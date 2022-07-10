@@ -5,16 +5,15 @@ import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
 import com.ioofholidings.robotchallenge.model.Coordinate;
 import com.ioofholidings.robotchallenge.model.Robot;
 import com.ioofholidings.robotchallenge.model.Table;
-import com.ioofholidings.robotchallenge.service.TableService;
 
-public class MoveCommand implements Command {
+public class MoveCommand extends Command {
 
 	@Override
-	public void execute(Table table) {
+	public Object execute(Table table) {
 		Robot activeRobot = table.getActiveRobot();
 		if (activeRobot == null) {
 			// No active robot is set, ignore
-			return;
+			return 1;
 		}
 		
 		try {
@@ -37,10 +36,11 @@ public class MoveCommand implements Command {
 					throw new RobotChallengeException(RobotChallengeError.ACTIVE_ROBOT_FACING_ERROR);				
 			}
 			
-			TableService.getInstance().updateRobot(table, activeRobot, newCoordinate);
+			getTableService().updateRobot(table, activeRobot, newCoordinate);
 		} catch (CloneNotSupportedException e) {
 			throw new RobotChallengeException(e.getMessage(), e);
 		}
+		return 1;
 	}
 
 }

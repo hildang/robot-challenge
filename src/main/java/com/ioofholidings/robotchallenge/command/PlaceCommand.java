@@ -6,9 +6,8 @@ import com.ioofholidings.robotchallenge.model.Coordinate;
 import com.ioofholidings.robotchallenge.model.Facing;
 import com.ioofholidings.robotchallenge.model.Robot;
 import com.ioofholidings.robotchallenge.model.Table;
-import com.ioofholidings.robotchallenge.service.TableService;
 
-public class PlaceCommand implements Command {
+public class PlaceCommand extends Command {
 	
 	private int x; 
 	private int y; 
@@ -33,9 +32,10 @@ public class PlaceCommand implements Command {
 	}
 	
 	@Override
-	public void execute(Table table) {
+	public Object execute(Table table) {
 		Robot newRobot = new Robot(table.getRobotList().size(), new Coordinate(this.x, this.y), this.f);
-		TableService.getInstance().addRobot(table,  newRobot);
+		getTableService().addRobot(table,  newRobot);
+		return 1;
 	}
 
 }

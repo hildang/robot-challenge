@@ -3,9 +3,8 @@ package com.ioofholidings.robotchallenge.command;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeError;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
 import com.ioofholidings.robotchallenge.model.Table;
-import com.ioofholidings.robotchallenge.service.TableService;
 
-public class RobotCommand implements Command {
+public class RobotCommand extends Command {
 
 	private int number;
 	public RobotCommand(String[] args) {
@@ -21,8 +20,9 @@ public class RobotCommand implements Command {
 	}
 	
 	@Override
-	public void execute(Table table) {
-		TableService.getInstance().setActiveRobot(table, number);		
+	public Object execute(Table table) {
+		getTableService().setActiveRobot(table, number);	
+		return 1;
 	}
 
 }

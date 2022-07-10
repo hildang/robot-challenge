@@ -2,27 +2,23 @@ package com.ioofholidings.robotchallenge.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ioofholidings.robotchallenge.exception.RobotChallengeError;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
 import com.ioofholidings.robotchallenge.model.Coordinate;
 import com.ioofholidings.robotchallenge.model.Robot;
 import com.ioofholidings.robotchallenge.model.Table;
 
+@Service
 public class TableService {
-
-	private static TableService _instance;
-	
-	private TableService() {}
-	
-	public static TableService getInstance() {
-		if (_instance == null) {
-			_instance = new TableService();
-		}
-		return _instance;
-	}
 	
 	public void addRobot(Table table, Robot robot) {
 		if (robot == null) {
+			return;
+		}
+		if (!validateCoordinate(table, robot.getCoordinate())) {
+			// robot will drop from the table, ignore
 			return;
 		}
 		List<Robot> robotList = table.getRobotList();
@@ -32,8 +28,7 @@ public class TableService {
 	}
 	
 	public void updateRobot(Table table, Robot robot, Coordinate newCoordinate) {
-		if (newCoordinate.getX() < 0 || newCoordinate.getY() < 0 || 
-			newCoordinate.getX() > table.getWidth() || newCoordinate.getY() > table.getLength()) {
+		if (!validateCoordinate(table, newCoordinate)) {
 			// robot will drop from the table, ignore
 			return;
 		}
@@ -50,13 +45,11 @@ public class TableService {
 		table.setActiveRobot(activeRobot);
 	}
 	
-	public void print(Table table) {
-		List<Robot> robotList = table.getRobotList();
-		Robot activeRobot = table.getActiveRobot();
-		System.out.println(activeRobot.getCoordinate().getX() + "," + activeRobot.getCoordinate().getY() + "," + activeRobot.getFacing());
-		if (robotList.size() > 1) {
-			System.out.println("Total robots: " + robotList.size());
-			System.out.println("Active Robot: " + activeRobot.getId());
+	private boolean validateCoordinate(Table table, Coordinate newCoordinate) {
+		if (newCoordinate == null || newCoordinate.getX() < 0 || newCoordinate.getY() < 0 || 
+			newCoordinate.getX() > table.getWidth() || newCoordinate.getY() > table.getLength()) {
+			return false;
 		}
+		return true;
 	}
 }

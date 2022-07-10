@@ -6,14 +6,14 @@ import com.ioofholidings.robotchallenge.model.Facing;
 import com.ioofholidings.robotchallenge.model.Robot;
 import com.ioofholidings.robotchallenge.model.Table;
 
-public class RightCommand implements Command {
+public class RightCommand extends Command {
 
 	@Override
-	public void execute(Table table) {
+	public Object execute(Table table) {
 		Robot activeRobot = table.getActiveRobot();
 		if (activeRobot == null) {
 			// No active robot is set, ignore
-			return;
+			return 1;
 		}
 		
 		Facing newFacing;
@@ -36,6 +36,7 @@ public class RightCommand implements Command {
 		
 		activeRobot.setFacing(newFacing);
 		table.setActiveRobot(activeRobot);
+		return 1;
 	}
 
 }
