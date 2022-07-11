@@ -17,22 +17,23 @@ public class TableService {
 		if (robot == null) {
 			return;
 		}
-		if (!validateCoordinate(table, robot.getCoordinate())) {
-			// robot will drop from the table, ignore
+		if (table.isOccupied(robot.getCoordinate())) {
 			return;
 		}
 		List<Robot> robotList = table.getRobotList();
 		robot.setId(robotList.size() + 1);
 		table.addRobot(robot);
 		table.setActiveRobot(robot);
+		table.setOccupied(robot.getCoordinate());
 	}
 	
 	public void updateRobot(Table table, Robot robot, Coordinate newCoordinate) {
-		if (!validateCoordinate(table, newCoordinate)) {
-			// robot will drop from the table, ignore
+		if (table.isOccupied(newCoordinate)) {
 			return;
 		}
+		table.setOccupied(robot.getCoordinate(), false);
 		robot.setCoordinate(newCoordinate);
+		table.setOccupied(newCoordinate);
 	}
 	
 	public void setActiveRobot(Table table, int id) {
@@ -41,15 +42,12 @@ public class TableService {
 			throw new RobotChallengeException(RobotChallengeError.ROBOT_NUMBER_INVALID);				
 		}
 		Robot activeRobot = robotList.get(id - 1);
-		activeRobot.setActive(true);
-		table.setActiveRobot(activeRobot);
+		this.setActiveRobot(table, activeRobot);
 	}
 	
-	private boolean validateCoordinate(Table table, Coordinate newCoordinate) {
-		if (newCoordinate == null || newCoordinate.getX() < 0 || newCoordinate.getY() < 0 || 
-			newCoordinate.getX() > table.getWidth() || newCoordinate.getY() > table.getLength()) {
-			return false;
-		}
-		return true;
+	public void setActiveRobot(Table table, Robot robot) {
+		robot.setActive(true);
+		table.setActiveRobot(robot);
 	}
+	
 }

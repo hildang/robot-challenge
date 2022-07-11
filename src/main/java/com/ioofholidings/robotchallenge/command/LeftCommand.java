@@ -35,7 +35,7 @@ public class LeftCommand extends Command {
 		}
 		
 		activeRobot.setFacing(newFacing);
-		table.setActiveRobot(activeRobot);
+		getTableService().setActiveRobot(table, activeRobot);
 		return 1;
 	}
 
