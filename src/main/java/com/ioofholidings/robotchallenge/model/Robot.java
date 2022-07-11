@@ -1,18 +1,20 @@
 package com.ioofholidings.robotchallenge.model;
 
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class Robot {
 
-	@NonNull private Integer id; 
-	@NonNull private Coordinate coordinate; 
-	@NonNull private Facing facing; 
+	private Integer id; 
+	private Coordinate coordinate; 
+	private Facing facing; 
 	private boolean isActive = false; 
+	
+	public Robot(Coordinate coordinate, Facing facing) {
+		this.coordinate = coordinate;
+		this.facing = facing;
+	}
 	
 }

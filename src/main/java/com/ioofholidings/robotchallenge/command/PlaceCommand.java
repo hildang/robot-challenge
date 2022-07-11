@@ -33,7 +33,7 @@ public class PlaceCommand extends Command {
 	
 	@Override
 	public Object execute(Table table) {
-		Robot newRobot = new Robot(table.getRobotList().size(), new Coordinate(this.x, this.y), this.f);
+		Robot newRobot = new Robot(new Coordinate(this.x, this.y), this.f);
 		getTableService().addRobot(table,  newRobot);
 		return 1;
 	}

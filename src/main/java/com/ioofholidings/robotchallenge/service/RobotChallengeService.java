@@ -1,6 +1,5 @@
 package com.ioofholidings.robotchallenge.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ioofholidings.robotchallenge.command.Command;
@@ -8,19 +7,16 @@ import com.ioofholidings.robotchallenge.command.PlaceCommand;
 import com.ioofholidings.robotchallenge.command.factory.CommandFactory;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeError;
 import com.ioofholidings.robotchallenge.exception.RobotChallengeException;
-import com.ioofholidings.robotchallenge.model.Table;
 
 @Service
 public class RobotChallengeService {
 	
-	private Table table; 
 	private boolean isFirstCommand = true;
 	
-	@Autowired
 	private TableService tableService; 
 	
-	public RobotChallengeService(Table table) {
-		this.table = table;
+	public RobotChallengeService(TableService tableService) {
+		this.tableService = tableService;
 	}
 	
     public void setFirstCommand(boolean isFirstCommand) {
@@ -34,7 +30,7 @@ public class RobotChallengeService {
 		}
 		
 		command.setTableService(this.tableService);
-		Object result = command.execute(this.table);
+		Object result = command.execute(this.tableService.getTable());
 		isFirstCommand = false;
 		return result;
     }

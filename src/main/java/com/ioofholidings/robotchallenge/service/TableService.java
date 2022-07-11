@@ -12,7 +12,17 @@ import com.ioofholidings.robotchallenge.model.Table;
 
 @Service
 public class TableService {
+
+	private Table table; 
 	
+	public TableService(Table table) {
+		this.table = table;
+	}
+	
+	public Table getTable() {
+		return table;
+	}
+
 	public void addRobot(Table table, Robot robot) {
 		if (robot == null) {
 			return;
@@ -23,7 +33,7 @@ public class TableService {
 		List<Robot> robotList = table.getRobotList();
 		robot.setId(robotList.size() + 1);
 		table.addRobot(robot);
-		table.setActiveRobot(robot);
+		setActiveRobot(table, robot);
 		table.setOccupied(robot.getCoordinate());
 	}
 	
@@ -46,6 +56,9 @@ public class TableService {
 	}
 	
 	public void setActiveRobot(Table table, Robot robot) {
+		if (table.getActiveRobot() != null) {
+			table.getActiveRobot().setActive(false);
+		}
 		robot.setActive(true);
 		table.setActiveRobot(robot);
 	}
